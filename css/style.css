@@ -62,8 +62,8 @@
     letter-spacing:0.1em;
     font-weight:600;
   }
-  .lang span:first-child{ color:var(--text); }
-  .lang span:last-child{ color:var(--text-dimmer); cursor:pointer; }
+  .lang span{ color:var(--text-dimmer); cursor:pointer; transition:color .2s ease; }
+  .lang span.lang-active{ color:var(--text); cursor:default; }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -415,6 +415,79 @@
       transform:none !important;
       width:auto !important;
     }
+  }
+
+  /* ---------- VIDEO MODAL ---------- */
+  .video-modal{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .3s ease, visibility 0s linear .3s;
+  }
+  .video-modal.is-open{
+    opacity:1;
+    visibility:visible;
+    transition:opacity .3s ease, visibility 0s linear 0s;
+  }
+  .video-modal-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.88);
+  }
+  .video-modal-inner{
+    position:relative;
+    width:min(920px, 90vw);
+    max-height:85vh;
+    z-index:1;
+    transform:scale(0.96);
+    transition:transform .3s cubic-bezier(.16,.8,.24,1);
+  }
+  .video-modal.is-open .video-modal-inner{
+    transform:scale(1);
+  }
+  .video-modal-content{
+    width:100%;
+    aspect-ratio:16/9;
+    background:#111;
+    border-radius:4px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .video-modal-content video,
+  .video-modal-content iframe{
+    width:100%;
+    height:100%;
+    display:block;
+    border:none;
+  }
+  .video-modal-close{
+    position:absolute;
+    top:-44px;
+    right:0;
+    width:34px;
+    height:34px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0.8;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .video-modal-close:hover{
+    opacity:1;
+    transform:rotate(90deg);
+  }
+  body.modal-open{
+    overflow:hidden;
   }
 
   /* ---------- RESPONSIVE ---------- */

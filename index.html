@@ -15,23 +15,23 @@
   <div class="wrap header-inner">
     <div class="logo">ALEX REEVE</div>
     <nav>
-      <a href="#about">ABOUT ME</a>
-      <a href="#portfolio">PORTFOLIO</a>
-      <a href="#contacts">CONTACTS</a>
+      <a href="#about" data-en="ABOUT ME" data-ru="ОБО МНЕ">ABOUT ME</a>
+      <a href="#portfolio" data-en="PORTFOLIO" data-ru="ПОРТФОЛИО">PORTFOLIO</a>
+      <a href="#contacts" data-en="CONTACTS" data-ru="КОНТАКТЫ">CONTACTS</a>
     </nav>
-    <div class="lang"><span>EN</span><span>RU</span></div>
+    <div class="lang"><span data-lang="en" class="lang-active">EN</span><span data-lang="ru">RU</span></div>
   </div>
 </header>
 
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="eyebrow-row">
-      <span class="eyebrow">AFTER EFFECTS</span>
+      <span class="eyebrow" data-en="AFTER EFFECTS" data-ru="AFTER EFFECTS">AFTER EFFECTS</span>
       <span class="rule"></span>
     </div>
-    <h1 class="hero-title">CREATIVE VIDEO EDITOR</h1>
+    <h1 class="hero-title" data-en="CREATIVE VIDEO EDITOR" data-ru="КРЕАТИВНЫЙ ВИДЕОМОНТАЖЁР">CREATIVE VIDEO EDITOR</h1>
     <div class="eyebrow-row reverse">
-      <span class="eyebrow">PREMIER PRO</span>
+      <span class="eyebrow" data-en="PREMIER PRO" data-ru="PREMIERE PRO">PREMIER PRO</span>
       <span class="rule"></span>
     </div>
   </div>
@@ -40,47 +40,57 @@
 <section id="portfolio">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="section-label">PORTFOLIO</span>
-      <a href="#" class="more-link">MORE WORKS</a>
+      <span class="section-label" data-en="PORTFOLIO" data-ru="ПОРТФОЛИО">PORTFOLIO</span>
+      <a href="#" class="more-link" data-en="MORE WORKS" data-ru="ЕЩЁ РАБОТЫ">MORE WORKS</a>
     </div>
     <div class="portfolio-grid stagger">
-      <div class="p-item reveal">
+      <div class="p-item reveal" data-video="videos/grain.mp4" data-video-type="file">
         <div class="p-thumb thumb-1">
           <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M0 0L14 8L0 16V0Z" fill="#0a0a0a"/></svg></div>
         </div>
-        <div class="p-caption">Coffee House «Grain»</div>
+        <div class="p-caption" data-en="Coffee House «Grain»" data-ru="Кофейня «Grain»">Coffee House «Grain»</div>
       </div>
-      <div class="p-item reveal">
+      <div class="p-item reveal" data-video="videos/midnight.mp4" data-video-type="file">
         <div class="p-thumb thumb-2">
           <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M0 0L14 8L0 16V0Z" fill="#0a0a0a"/></svg></div>
         </div>
-        <div class="p-caption">«Midnight»</div>
+        <div class="p-caption" data-en="«Midnight»" data-ru="«Полночь»">«Midnight»</div>
       </div>
-      <div class="p-item reveal">
+      <div class="p-item reveal" data-video="videos/clothing-brand.mp4" data-video-type="file">
         <div class="p-thumb thumb-3">
           <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M0 0L14 8L0 16V0Z" fill="#0a0a0a"/></svg></div>
         </div>
-        <div class="p-caption">Clothing brand</div>
+        <div class="p-caption" data-en="Clothing brand" data-ru="Бренд одежды">Clothing brand</div>
       </div>
-      <div class="p-item reveal">
+      <div class="p-item reveal" data-video="videos/georgia.mp4" data-video-type="file">
         <div class="p-thumb thumb-4">
           <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M0 0L14 8L0 16V0Z" fill="#0a0a0a"/></svg></div>
         </div>
-        <div class="p-caption">Georgia</div>
+        <div class="p-caption" data-en="Georgia" data-ru="Грузия">Georgia</div>
       </div>
-      <div class="p-item reveal">
+      <div class="p-item reveal" data-video="videos/anna-dmitry.mp4" data-video-type="file">
         <div class="p-thumb thumb-5">
           <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M0 0L14 8L0 16V0Z" fill="#0a0a0a"/></svg></div>
         </div>
-        <div class="p-caption">Anna &amp; Dmitry</div>
+        <div class="p-caption" data-en="Anna &amp; Dmitry" data-ru="Анна и Дмитрий">Anna &amp; Dmitry</div>
       </div>
-      <div class="p-item reveal">
+      <div class="p-item reveal" data-video="videos/it-company.mp4" data-video-type="file">
         <div class="p-thumb thumb-6">
           <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M0 0L14 8L0 16V0Z" fill="#0a0a0a"/></svg></div>
         </div>
-        <div class="p-caption">IT company</div>
+        <div class="p-caption" data-en="IT company" data-ru="IT-компания">IT company</div>
       </div>
     </div>
+  </div>
+</section>
+
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-backdrop"></div>
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoModalClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M1 1L17 17M17 1L1 17" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <div class="video-modal-content" id="videoModalContent"></div>
   </div>
 </section>
 
@@ -89,23 +99,23 @@
     <div class="about-grid reveal">
       <div class="about-photo">photo</div>
       <div class="about-copy">
-        <div class="section-label">ABOUT ME</div>
-        <p>I edit at the point where rhythm meets meaning — cutting footage isn't just joining clips, it's guiding the viewer through a story they'll want to finish.</p>
-        <p>I work with ads, music videos, wedding films and social content. Premiere Pro handles the edit and sound, After Effects covers motion graphics and compositing, DaVinci Resolve handles the grade. I keep deadlines and always talk through references before starting.</p>
+        <div class="section-label" data-en="ABOUT ME" data-ru="ОБО МНЕ">ABOUT ME</div>
+        <p data-en="I edit at the point where rhythm meets meaning — cutting footage isn't just joining clips, it's guiding the viewer through a story they'll want to finish." data-ru="Я монтирую там, где ритм встречается со смыслом — склейка кадров это не просто соединение клипов, а умение провести зрителя через историю, которую он захочет досмотреть до конца.">I edit at the point where rhythm meets meaning — cutting footage isn't just joining clips, it's guiding the viewer through a story they'll want to finish.</p>
+        <p data-en="I work with ads, music videos, wedding films and social content. Premiere Pro handles the edit and sound, After Effects covers motion graphics and compositing, DaVinci Resolve handles the grade. I keep deadlines and always talk through references before starting." data-ru="Работаю с рекламой, клипами, свадебными фильмами и контентом для соцсетей. Premiere Pro — монтаж и звук, After Effects — моушн-графика и композитинг, DaVinci Resolve — цветокоррекция. Соблюдаю дедлайны и всегда обсуждаю референсы перед началом работы.">I work with ads, music videos, wedding films and social content. Premiere Pro handles the edit and sound, After Effects covers motion graphics and compositing, DaVinci Resolve handles the grade. I keep deadlines and always talk through references before starting.</p>
       </div>
     </div>
     <div class="about-meta reveal">
       <div class="meta-row">
-        <div class="meta-label">TOOLS</div>
-        <div class="meta-value">Premiere Pro, After Effects, DaVinci Resolve</div>
+        <div class="meta-label" data-en="TOOLS" data-ru="ИНСТРУМЕНТЫ">TOOLS</div>
+        <div class="meta-value" data-en="Premiere Pro, After Effects, DaVinci Resolve" data-ru="Premiere Pro, After Effects, DaVinci Resolve">Premiere Pro, After Effects, DaVinci Resolve</div>
       </div>
       <div class="meta-row">
-        <div class="meta-label">FORMATS</div>
-        <div class="meta-value">Ads, music videos, weddings, Reels/TikTok, vlogs</div>
+        <div class="meta-label" data-en="FORMATS" data-ru="ФОРМАТЫ">FORMATS</div>
+        <div class="meta-value" data-en="Ads, music videos, weddings, Reels/TikTok, vlogs" data-ru="Реклама, клипы, свадьбы, Reels/TikTok, влоги">Ads, music videos, weddings, Reels/TikTok, vlogs</div>
       </div>
       <div class="meta-row">
-        <div class="meta-label">TURNAROUND</div>
-        <div class="meta-value">Short edit — 2-4 days, full project — by agreement</div>
+        <div class="meta-label" data-en="TURNAROUND" data-ru="СРОКИ">TURNAROUND</div>
+        <div class="meta-value" data-en="Short edit — 2-4 days, full project — by agreement" data-ru="Короткий монтаж — 2-4 дня, полный проект — по договорённости">Short edit — 2-4 days, full project — by agreement</div>
       </div>
     </div>
   </div>
@@ -113,34 +123,34 @@
 
 <section>
   <div class="wrap">
-    <div class="section-label reveal" style="margin-bottom:40px;">SKILLS</div>
+    <div class="section-label reveal" style="margin-bottom:40px;" data-en="SKILLS" data-ru="НАВЫКИ">SKILLS</div>
     <div class="skills-list stagger">
       <div class="skill-row reveal">
         <div class="skill-name">Premiere Pro</div>
         <div class="skill-bar-wrap">
           <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%;"></div></div>
-          <div class="skill-caption">editing, sound, colour</div>
+          <div class="skill-caption" data-en="editing, sound, colour" data-ru="монтаж, звук, цвет">editing, sound, colour</div>
         </div>
       </div>
       <div class="skill-row reveal">
         <div class="skill-name">After Effects</div>
         <div class="skill-bar-wrap">
           <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%;"></div></div>
-          <div class="skill-caption">motion graphics, titles</div>
+          <div class="skill-caption" data-en="motion graphics, titles" data-ru="моушн-графика, титры">motion graphics, titles</div>
         </div>
       </div>
       <div class="skill-row reveal">
-        <div class="skill-name">Colour grading</div>
+        <div class="skill-name" data-en="Colour grading" data-ru="Цветокоррекция">Colour grading</div>
         <div class="skill-bar-wrap">
           <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%;"></div></div>
           <div class="skill-caption">DaVinci Resolve</div>
         </div>
       </div>
       <div class="skill-row reveal">
-        <div class="skill-name">Sound &amp; music</div>
+        <div class="skill-name" data-en="Sound &amp; music" data-ru="Звук и музыка">Sound &amp; music</div>
         <div class="skill-bar-wrap">
           <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%;"></div></div>
-          <div class="skill-caption">mixing, track selection</div>
+          <div class="skill-caption" data-en="mixing, track selection" data-ru="сведение, подбор треков">mixing, track selection</div>
         </div>
       </div>
     </div>
@@ -149,39 +159,39 @@
 
 <section id="contacts">
   <div class="wrap">
-    <h2 class="talk-title reveal">Let's talk</h2>
+    <h2 class="talk-title reveal" data-en="Let's talk" data-ru="Давайте обсудим">Let's talk</h2>
     <div class="contact-grid reveal">
       <form class="contact-form" onsubmit="return false;">
         <div class="field">
-          <label>Name*</label>
-          <input type="text" placeholder="Michael Grape">
+          <label data-en="Name*" data-ru="Имя*">Name*</label>
+          <input type="text" placeholder="Michael Grape" data-en-placeholder="Michael Grape" data-ru-placeholder="Михаил Грейп">
         </div>
         <div class="field">
-          <label>Contact*</label>
-          <input type="text" placeholder="@username">
+          <label data-en="Contact*" data-ru="Контакт*">Contact*</label>
+          <input type="text" placeholder="@username" data-en-placeholder="@username" data-ru-placeholder="@юзернейм">
         </div>
         <div class="field">
-          <label>Your message*</label>
-          <textarea placeholder="Message"></textarea>
+          <label data-en="Your message*" data-ru="Ваше сообщение*">Your message*</label>
+          <textarea placeholder="Message" data-en-placeholder="Message" data-ru-placeholder="Сообщение"></textarea>
         </div>
-        <button type="submit" class="send-btn">SEND REQUEST</button>
+        <button type="submit" class="send-btn" data-en="SEND REQUEST" data-ru="ОТПРАВИТЬ ЗАЯВКУ">SEND REQUEST</button>
       </form>
       <div class="contact-info">
         <div class="info-block">
-          <div class="info-label">Telegram</div>
+          <div class="info-label" data-en="Telegram" data-ru="Телеграм">Telegram</div>
           <div class="info-value">@yourusername</div>
         </div>
         <div class="info-block">
-          <div class="info-label">Instagram</div>
+          <div class="info-label" data-en="Instagram" data-ru="Инстаграм">Instagram</div>
           <div class="info-value">@yourusername</div>
         </div>
         <div class="info-block">
-          <div class="info-label">Email</div>
+          <div class="info-label" data-en="Email" data-ru="Почта">Email</div>
           <div class="info-value">hello@example.com</div>
         </div>
         <div class="info-block">
-          <div class="info-label">Location</div>
-          <div class="info-value">Netherlands, remote</div>
+          <div class="info-label" data-en="Location" data-ru="Локация">Location</div>
+          <div class="info-value" data-en="Netherlands, remote" data-ru="Нидерланды, удалённо">Netherlands, remote</div>
         </div>
       </div>
     </div>
@@ -189,7 +199,7 @@
 </section>
 
 <footer>
-  <div class="wrap">© 2026 ALEX REEVE. ALL RIGHTS RESERVED.</div>
+  <div class="wrap" data-en="© 2026 ALEX REEVE. ALL RIGHTS RESERVED." data-ru="© 2026 ALEX REEVE. ВСЕ ПРАВА ЗАЩИЩЕНЫ.">© 2026 ALEX REEVE. ALL RIGHTS RESERVED.</div>
 </footer>
 
 <script src="js/script.js"></script>
