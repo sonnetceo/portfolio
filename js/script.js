@@ -1,108 +1,150 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ============================================================
+// Reveal-on-scroll animation
+// ============================================================
+try {
+  const revealEls = document.querySelectorAll('.reveal');
 
-  I18N.apply(I18N.getLang());
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    // No IntersectionObserver support — just show everything.
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => I18N.apply(btn.dataset.lang));
+  // Safety net: whatever happens (slow load, blocked script,
+  // a merge conflict elsewhere in this file), content must never
+  // stay permanently invisible. Force it visible after a short delay.
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.in-view)').forEach(el => {
+        el.classList.add('in-view');
+      });
+    }, 2000);
+  });
+} catch (err) {
+  console.error('Reveal animation error:', err);
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+}
+
+// ============================================================
+// Animated skill bar fill
+// ============================================================
+try {
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  bars.forEach(el => {
+    el.dataset.target = el.style.width;
+    el.style.width = '0';
   });
 
-  const burger = document.getElementById('burger');
-  const tlClips = document.getElementById('tlClips');
-  if (burger && tlClips) {
-    burger.addEventListener('click', () => {
-      const open = tlClips.classList.toggle('open');
-      burger.setAttribute('aria-expanded', String(open));
-    });
-    tlClips.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        tlClips.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
+  if ('IntersectionObserver' in window) {
+    const barIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          const el = entry.target;
+          setTimeout(() => { el.style.width = el.dataset.target; }, 50);
+          barIo.unobserve(el);
+        }
       });
+    }, { threshold: 0.4 });
+    bars.forEach(el => barIo.observe(el));
+  } else {
+    bars.forEach(el => { el.style.width = el.dataset.target; });
+  }
+} catch (err) {
+  console.error('Skill bar animation error:', err);
+  document.querySelectorAll('.skill-bar-fill').forEach(el => {
+    if (el.dataset.target) el.style.width = el.dataset.target;
+  });
+}
+
+// ============================================================
+// Language switcher (EN / RU)
+// ============================================================
+try {
+  const langSpans = document.querySelectorAll('.lang span[data-lang]');
+  const translatable = document.querySelectorAll('[data-en]');
+  const placeholders = document.querySelectorAll('[data-en-placeholder]');
+
+  function setLanguage(lang){
+    translatable.forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (text !== null) el.textContent = text;
     });
+    placeholders.forEach(el => {
+      const text = el.getAttribute('data-' + lang + '-placeholder');
+      if (text !== null) el.setAttribute('placeholder', text);
+    });
+    langSpans.forEach(span => {
+      span.classList.toggle('lang-active', span.dataset.lang === lang);
+    });
+    document.documentElement.setAttribute('lang', lang);
+    try { localStorage.setItem('site-lang', lang); } catch (e) {}
   }
 
-  const modal = document.getElementById('modal');
-  const modalVideo = document.getElementById('modalVideo');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalTools = document.getElementById('modalTools');
-  const modalTag = document.getElementById('modalTag');
-  const cards = document.querySelectorAll('.clip-card');
-  let activeCard = null;
+  langSpans.forEach(span => {
+    span.addEventListener('click', () => setLanguage(span.dataset.lang));
+  });
 
-  function renderModalText(card) {
-    const lang = I18N.getLang();
-    const title = card.dataset.title || '';
-    const desc = card.dataset[`desc${lang.charAt(0).toUpperCase()}${lang.slice(1)}`] || card.dataset.descEn || '';
-    const tools = card.dataset.tools || '';
-    const tagKey = card.dataset.tagKey;
-
-    modalTitle.textContent = title;
-    modalDesc.textContent = desc;
-    modalTools.textContent = tools ? `${I18N.t('modal.toolsPrefix')} ${tools}` : '';
-    modalTag.textContent = tagKey ? I18N.t(`tag.${tagKey}`) : '';
+  let savedLang = null;
+  try { savedLang = localStorage.getItem('site-lang'); } catch (e) {}
+  if (savedLang === 'en' || savedLang === 'ru'){
+    setLanguage(savedLang);
   }
+} catch (err) {
+  console.error('Language switcher error:', err);
+}
 
-  function openModal(card) {
-    activeCard = card;
-    renderModalText(card);
+// ============================================================
+// Video modal (click a portfolio item to watch its video)
+// ============================================================
+try {
+  const modal = document.getElementById('videoModal');
+  const modalContent = document.getElementById('videoModalContent');
+  const modalClose = document.getElementById('videoModalClose');
+  const portfolioItems = document.querySelectorAll('.p-item[data-video]');
 
-    const video = card.dataset.video;
-    if (video) {
-      if (video.endsWith('.mp4')) {
-        modalVideo.innerHTML = `<video src="${video}" controls autoplay></video>`;
+  if (modal && modalContent && modalClose) {
+    const modalBackdrop = modal.querySelector('.video-modal-backdrop');
+
+    function openVideoModal(src, type){
+      if (!src) return;
+      if (type === 'embed'){
+        modalContent.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
       } else {
-        modalVideo.innerHTML = `<iframe src="${video}" title="${card.dataset.title || ''}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        modalContent.innerHTML = '<video src="' + src + '" controls autoplay playsinline></video>';
       }
-    } else {
-      modalVideo.innerHTML = `<div class="modal-video-placeholder">${I18N.t('modal.placeholder')}</div>`;
+      modal.classList.add('is-open');
+      document.body.classList.add('modal-open');
     }
 
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
+    function closeVideoModal(){
+      modal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
+      modalContent.innerHTML = '';
+    }
 
-  function closeModal() {
-    activeCard = null;
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-    modalVideo.innerHTML = '';
-    document.body.style.overflow = '';
-  }
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => openModal(card));
-    card.setAttribute('role', 'button');
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openModal(card);
-      }
+    portfolioItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const src = item.dataset.video;
+        const type = item.dataset.videoType || 'file';
+        openVideoModal(src, type);
+      });
     });
-  });
 
-  modal?.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal?.classList.contains('open')) closeModal();
-  });
-
-  document.addEventListener('i18n:changed', () => {
-    if (activeCard && modal.classList.contains('open')) renderModalText(activeCard);
-  });
-
-  const form = document.getElementById('contactForm');
-  const formNote = document.getElementById('formNote');
-
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      const action = form.getAttribute('action') || '';
-      if (action.includes('your-id')) {
-        e.preventDefault();
-        formNote.textContent = I18N.t('contact.formNoteHint');
-      } else {
-        formNote.textContent = I18N.t('contact.formNoteSending');
-      }
+    modalClose.addEventListener('click', closeVideoModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeVideoModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeVideoModal();
     });
   }
-});
+} catch (err) {
+  console.error('Video modal error:', err);
+}
