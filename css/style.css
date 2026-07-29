@@ -170,7 +170,7 @@
     color:#d6d6d6;
   }
 
-  .thumb-1{ background:url(/assets/imgs/thumb1.png) center/cover no-repeat; }
+  .thumb-1{ background:url(../assets/imgs/thumb1.png) center/cover no-repeat; }
   .thumb-2{ background:linear-gradient(160deg,#0e2b28,#0a1d1c 55%,#08201c); }
   .thumb-3{ background:linear-gradient(150deg,#241f1c,#3a2a20 45%,#1c1512); }
   .thumb-4{ background:linear-gradient(160deg,#2a3a52,#4a5a68 55%,#c98a5a 100%); }
